@@ -25,7 +25,6 @@ h1 {
 }
 .header p {
 	margin: 0;
-
 	font-size: .875em;
 }
 .header h1 {
@@ -37,14 +36,15 @@ h1 {
 	margin-right:auto;
 }
 .tweets-container{
+	clear:both;
 	overflow:hidden;
-	/*height:815px;*/
+	height:595px;
 	width:517px;
 	margin:auto;
 	border:1px solid #e6e6e6;
 	
 	position:relative;
-	;
+	
 }
 .tweets-widget{
 	/*position:absolute;*/
@@ -68,12 +68,12 @@ h1 {
 
 form {
 	margin-top: 36px;
-	padding-bottom: 10px;
 	border: none;
+	margin-bottom: 0px;
 }
 
 textarea {
-	/*padding-top: 4px 5px;*/
+	resize: none;
 	margin-bottom: 10px;
 	width: 514px;
 	border:1px solid #adadad;
@@ -84,7 +84,6 @@ textarea {
 
 #countdown {
 	float: right;
-	/*padding: 8px 8px 0 5px;*/
 	padding: 6px 8px 0 5px;
 }
 
@@ -108,7 +107,6 @@ textarea {
 	padding:5px 12px;
 	text-decoration:none;
 	text-shadow:1px 1px 0px #f0f0f0;
-	/*margin: 2px 0 8px 0;*/
 	margin: 0px 0 8px 0; 
 }
 
@@ -130,12 +128,11 @@ textarea {
 	/*border:1px solid #adadad;*/
 }
 .message{
-	padding:16px 0 0px 10px;
-	position: absolute;
-
+	padding:0px 0 10px 0;
 	color:black;
-	font-size: 12px;
+	/*font-size: 12px;*/
 	display:none;
+	font-size: .875em;
 }
 .error{
 	color:red;

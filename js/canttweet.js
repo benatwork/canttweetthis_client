@@ -8,7 +8,7 @@ $(document).ready(function() {
 
 	$('#message').attr("placeholder",placeholders[0]);
 
-	$('form').on('submit',onSend);
+	$('#button').on('click',onSend);
 	$('textarea#message').keydown(limitText);
 	$('textarea#message').keyup(limitText);
 
@@ -48,6 +48,8 @@ $(document).ready(function() {
 
 		//get msg and check if it is valid
 		var msg = $('textarea#message').val();
+		$("#countdown").text(140);
+
 		if(!validate(msg)) return;
 
 		//gather form data for sending to server
@@ -62,28 +64,22 @@ $(document).ready(function() {
 			//url: 'http://localhost:5000',
 			data: data
 		}).success(function(resp){
-			if(resp.error){
-				var err = resp.error;
-				// handle any Error results from Twitter
-				switch(err.statusCode){
-					case 403:
-					addErrorText('Message rejected by Twitter');
-					break;
-
-					default:
-					addErrorText('Generic Twitter Error');
-				}
-				
-			} else {
-				//all good
-				console.log('success',resp);
-				$('form').on('submit',onSend);
-				addMessageText("Stay tuned, your secret tweet will appear below shortly");
-				$message.removeClass('error');
-			}
-		}).error(function(e){
-			//couldnt make the POST call
-			addErrorText('There was an error connecting to the server',e);
+			//all good
+			
+			$('form').on('submit',onSend);
+			addMessageText("Stay tuned, your secret tweet will appear below shortly.");
+			$message.removeClass('error');
+			
+		}).error(function(resp){
+			//server returned error
+			var error = JSON.parse(resp.responseText);
+			var twitterError = JSON.parse(error.error.data);
+			var twitterErrorMsg = twitterError.errors[0].message;
+			var twitterErrorCode = twitterError.errors[0].code;
+			var status = error.error.statusCode;
+			twitterErrorMsg ?  addErrorText(twitterErrorMsg) : addErrorText('Message rejected by Twitter');
+	
+			//addErrorText('There was an error connecting to the server');
 		});
 	}
 	var addErrorText = function(text){
