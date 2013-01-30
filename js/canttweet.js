@@ -53,11 +53,13 @@ $(document).ready(function() {
 		//gather form data for sending to server
 		var data = $('form').serialize();
 		$('textarea#message').val('');
-		//http://canttweetthis.herokuapp.com
+		$('form').off('submit',onSend);
+		//
 		$message.show();
 		$.ajax({
 			type: "POST",
-			//url: 'http://localhost:3001',
+			url: 'http://canttweetthis.herokuapp.com',
+			//url: 'http://localhost:5000',
 			data: data
 		}).success(function(resp){
 			if(resp.error){
@@ -74,12 +76,14 @@ $(document).ready(function() {
 				
 			} else {
 				//all good
+				console.log('success',resp);
+				$('form').on('submit',onSend);
 				addMessageText("Stay tuned, your secret tweet will appear below shortly");
 				$message.removeClass('error');
 			}
 		}).error(function(e){
 			//couldnt make the POST call
-			addErrorText('There was an error connecting to the server');
+			addErrorText('There was an error connecting to the server',e);
 		});
 	}
 	var addErrorText = function(text){
